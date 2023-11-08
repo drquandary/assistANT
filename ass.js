@@ -84,7 +84,7 @@ async function main() {
 
       // If the keepAsking state is falsy show an ending message
       if (!keepAsking) {
-        console.log("Alrighty then, I hope you learned something!\n");
+        console.log("I hope you learned something!\n");
       }
     }
 
