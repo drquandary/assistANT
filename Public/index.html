@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Chat with OpenAI</title>
+    <style>
+        #chat {
+            height: 300px;
+            border: 1px solid black;
+            padding: 10px;
+            overflow: auto;
+            margin-bottom: 10px;
+        }
+        #form {
+            display: flex;
+        }
+        #input {
+            flex-grow: 1;
+        }
+    </style>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <ul id="chat"></ul>
+    <form id="form" action="">
+        <input id="input" autocomplete="off" placeholder="Type your message here..." /><button>Send</button>
+    </form>
+
+    <script>
+        const socket = io();
+
+        const form = document.getElementById('form');
+        const input = document.getElementById('input');
+        const chat = document.getElementById('chat');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (input.value) {
+                socket.emit('chat message', input.value);
+                input.value = '';
+            }
+        });
+
+        socket.on('chat message', function(msg) {
+            const item = document.createElement('li');
+            item.textContent = msg;
+            chat.appendChild(item);
+            window.scrollTo(0, document.body.scrollHeight);
+        });
+    </script>
+</body>
+</html>
